@@ -14,10 +14,14 @@ const COLORS = [
   '#7986cb', // J - indigo
   '#ffb74d', // L - orange
   '#c0c0c8', // 8 - wild (comodín, generado por Tinte)
+  '#90a4ae', // 9 - reto (cuadro hueco 3×3)
 ];
 
 const POWERUP_EVERY = 10; // cada N líneas aparece un power-up
 const WILD = 8;           // valor de celda para comodín (Tinte)
+const CHALLENGE = 9;              // valor de celda para la pieza reto
+const CHALLENGE_EVERY = 7;        // cada N líneas aparece la pieza reto
+const CHALLENGE_SHAPE = [[9,9,9],[9,0,9],[9,9,9]]; // cuadro hueco 3×3
 const POWERUPS = ['bomb', 'ray', 'tint', 'gravity', 'freeze'];
 const POWER_ICONS = { bomb: '💣', ray: '⚡', tint: '🎨', gravity: '⬇️', freeze: '❄️' };
 const POWER_COLORS = { bomb: '#e57373', ray: '#ffd54f', tint: '#ba68c8', gravity: '#81c784', freeze: '#4dd0e1' };
@@ -59,6 +63,7 @@ const THEME_COLORS = {
 
 let board, current, next, hold, canHold, score, lines, level, paused, gameOver, lastTime, dropAccum, dropInterval, animId, theme;
 let powerupsAwarded, powerupQueued, freezeRemaining;
+let challengeAwarded, challengeQueued;
 
 function applyTheme(name) {
   theme = name;
@@ -91,6 +96,11 @@ function randomPowerup() {
   const power = POWERUPS[Math.floor(Math.random() * POWERUPS.length)];
   const shape = [[1]];
   return { type: WILD, power, shape, x: Math.floor(COLS / 2), y: 0 };
+}
+
+function makeChallenge() {
+  const shape = CHALLENGE_SHAPE.map(row => [...row]);
+  return { type: CHALLENGE, challenge: true, shape, x: Math.floor(COLS / 2) - 1, y: 0 };
 }
 
 function collide(shape, ox, oy) {
@@ -179,6 +189,11 @@ function clearLines() {
       powerupsAwarded = newAwarded;
       powerupQueued = true;
     }
+    const newChallenge = Math.floor(lines / CHALLENGE_EVERY);
+    if (newChallenge > challengeAwarded) {
+      challengeAwarded = newChallenge;
+      challengeQueued = true;
+    }
     updateHUD();
   }
 }
@@ -266,6 +281,9 @@ function spawn() {
   if (powerupQueued) {
     next = randomPowerup();
     powerupQueued = false;
+  } else if (challengeQueued) {
+    next = makeChallenge();
+    challengeQueued = false;
   } else {
     next = randomPiece();
   }
@@ -278,8 +296,10 @@ function spawn() {
 }
 
 function cloneForHold(piece) {
-  const shape = piece.power ? [[1]] : PIECES[piece.type].map(row => [...row]);
-  return { type: piece.type, shape, power: piece.power };
+  const shape = piece.challenge ? CHALLENGE_SHAPE.map(row => [...row])
+    : piece.power ? [[1]]
+    : PIECES[piece.type].map(row => [...row]);
+  return { type: piece.type, shape, power: piece.power, challenge: piece.challenge };
 }
 
 function holdSwap() {
@@ -295,6 +315,7 @@ function holdSwap() {
       type: swapped.type,
       shape,
       power: swapped.power,
+      challenge: swapped.challenge,
       x: Math.floor(COLS / 2) - Math.floor(shape[0].length / 2),
       y: 0,
     };
@@ -476,6 +497,8 @@ function init() {
   dropAccum = 0;
   powerupsAwarded = 0;
   powerupQueued = false;
+  challengeAwarded = 0;
+  challengeQueued = false;
   freezeRemaining = 0;
   lastTime = performance.now();
   next = randomPiece();
