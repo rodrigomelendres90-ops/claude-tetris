@@ -18,22 +18,25 @@
   </div>
   <div class="wrapper">
     <div class="game-container">
-      <canvas id="board" width="300" height="600"></canvas>
+      <div class="board-column">
+        <div class="stats-bar">
+          <div class="stat">
+            <span class="label">SCORE</span>
+            <span class="value" id="score">0</span>
+          </div>
+          <div class="stat">
+            <span class="label">LINES</span>
+            <span class="value" id="lines">0</span>
+          </div>
+          <div class="stat">
+            <span class="label">LEVEL</span>
+            <span class="value" id="level">1</span>
+          </div>
+        </div>
+        <canvas id="board" width="300" height="600"></canvas>
+      </div>
 
       <aside class="panel">
-        <div class="panel-section">
-          <span class="label">SCORE</span>
-          <span class="value" id="score">0</span>
-        </div>
-        <div class="panel-section">
-          <span class="label">LINES</span>
-          <span class="value" id="lines">0</span>
-        </div>
-        <div class="panel-section">
-          <span class="label">LEVEL</span>
-          <span class="value" id="level">1</span>
-        </div>
-
         <div class="panel-section" id="hold-section">
           <span class="label">HOLD</span>
           <canvas id="hold-canvas" width="120" height="120"></canvas>
@@ -42,6 +45,17 @@
         <div class="panel-section">
           <span class="label">NEXT</span>
           <canvas id="next-canvas" width="120" height="120"></canvas>
+        </div>
+
+        <div class="panel-section">
+          <span class="label">POWER-UPS</span>
+          <ul class="powerup-list">
+            <li><span class="powerup-icon">💣</span> Bomba</li>
+            <li><span class="powerup-icon">⚡</span> Rayo</li>
+            <li><span class="powerup-icon">🎨</span> Tinte</li>
+            <li><span class="powerup-icon">⬇️</span> Gravedad</li>
+            <li><span class="powerup-icon">❄️</span> Congelar</li>
+          </ul>
         </div>
 
         <div class="panel-section controls">

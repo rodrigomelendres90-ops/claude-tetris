@@ -134,6 +134,30 @@ body {
   align-items: flex-start;
 }
 
+.board-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stats-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.stat {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.stats-bar .value {
+  font-size: 22px;
+}
+
 #board {
   display: block;
   border: 1px solid var(--board-border);
@@ -183,6 +207,27 @@ body {
 
 #hold-canvas.locked {
   opacity: 0.35;
+}
+
+/* ---- Power-ups ---- */
+.powerup-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.powerup-list li {
+  font-size: 12px;
+  color: var(--control-text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.powerup-icon {
+  font-size: 14px;
+  line-height: 1;
 }
 
 /* ---- Controles ---- */
