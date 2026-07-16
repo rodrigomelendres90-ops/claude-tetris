@@ -7,7 +7,15 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1 class="game-title">TETRIS</h1>
+  <div class="top-bar">
+    <h1 class="game-title">TETRIS</h1>
+    <label class="theme-toggle" for="theme-switch">
+      <span class="theme-toggle-icon">🌙</span>
+      <input type="checkbox" id="theme-switch" />
+      <span class="theme-toggle-slider"></span>
+      <span class="theme-toggle-icon">☀️</span>
+    </label>
+  </div>
   <div class="wrapper">
     <div class="game-container">
       <canvas id="board" width="300" height="600"></canvas>
