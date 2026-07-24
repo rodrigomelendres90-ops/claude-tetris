@@ -124,6 +124,51 @@ body {
   transform: translateX(22px);
 }
 
+.skin-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.skin-select {
+  background: var(--kbd-bg);
+  color: var(--text);
+  border: 1px solid var(--kbd-border);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.skin-select:focus {
+  outline: 2px solid var(--value);
+  outline-offset: 1px;
+}
+
+/* ---- Skins visuales del tablero ---- */
+body[data-skin="neon"] {
+  --board-bg: #000000;
+  --board-border: #143a3f;
+}
+
+body[data-skin="neon"] #board,
+body[data-skin="neon"] #next-canvas,
+body[data-skin="neon"] #hold-canvas {
+  box-shadow: 0 0 30px rgba(0, 229, 255, 0.25);
+  border-color: rgba(0, 229, 255, 0.4);
+}
+
+body[data-skin="pastel"] {
+  --board-bg: #fbf3f6;
+  --board-border: #e6d6e0;
+}
+
+body.light[data-skin="pastel"] {
+  --board-bg: #fffaf9;
+  --board-border: #ecd9e2;
+}
+
 .wrapper {
   position: relative;
 }
